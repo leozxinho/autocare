@@ -1103,13 +1103,24 @@
     // mapa href -> nome do painel (aceita #servicos, #diferenciais, #contato)
     const map = { '#servicos':'servicos', '#diferenciais':'diferenciais', '#contato':'contato' };
 
+    // rola até o início do painel ativo (logo abaixo do cabeçalho fixo)
+    function scrollToPanel(){
+      const active = document.querySelector('.panel.is-active');
+      if (!active) { window.scrollTo({ top:0, behavior:'smooth' }); return; }
+      const header = document.getElementById('siteNav');
+      const offset = header ? header.offsetHeight : 0;
+      const y = active.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: Math.max(0, y), behavior:'smooth' });
+    }
+
     navLinks.forEach(a => {
       const href = a.getAttribute('href');
       if (map[href]) {
         a.addEventListener('click', (e) => {
           e.preventDefault();
           showPanel(map[href]);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // espera o painel ficar visível antes de calcular a posição
+          requestAnimationFrame(() => requestAnimationFrame(scrollToPanel));
           if (history.replaceState) history.replaceState(null, '', href);
         });
       }
@@ -1117,7 +1128,7 @@
 
     // qualquer link para #servicos (ex.: botão "Ver serviços" do hero) também troca o painel
     document.querySelectorAll('a[href="#servicos"]').forEach(a => {
-      a.addEventListener('click', (e) => { e.preventDefault(); showPanel('servicos'); window.scrollTo({top:0,behavior:'smooth'}); });
+      a.addEventListener('click', (e) => { e.preventDefault(); showPanel('servicos'); requestAnimationFrame(() => requestAnimationFrame(scrollToPanel)); });
     });
 
     // painel inicial conforme hash da URL
