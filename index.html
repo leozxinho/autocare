@@ -243,6 +243,13 @@
   /* ---------- SECTION SHELL ---------- */
   section{padding:clamp(64px,9vw,110px) 0}
 
+  /* ---------- PAINÉIS DE NAVEGAÇÃO ---------- */
+  .panel{display:none;animation:panelIn .4s ease}
+  .panel.is-active{display:block}
+  @keyframes panelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .nav-links a.active{color:var(--accent-text)}
+  @media (prefers-reduced-motion:reduce){ .panel{animation:none} }
+
   /* ---------- TRUST BAR ---------- */
   .trust-bar{background:var(--red);color:#fff}
   .trust-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:26px 0}
@@ -465,7 +472,7 @@
     .hero-bg{
       background-size:contain;
       background-repeat:no-repeat;
-      background-position:center top;
+      background-position:center 130px;
     }
     .hero::before{
       background:
@@ -741,6 +748,7 @@
   </div>
 </div>
 
+<div class="panel is-active" id="panel-servicos" data-panel="servicos">
 <section class="craft" aria-label="Nossa abordagem de trabalho">
   <div class="wrap">
     <div class="craft-copy reveal">
@@ -927,7 +935,9 @@
      Restauração de farol, troca de farol, para-choque, retrovisor,
      manutenção de fechadura, manutenção de vidro elétrico ou manual,
      maçaneta, iluminação, polimento, lavagem de banco, higienização interna. -->
+</div><!-- /panel-servicos -->
 
+<div class="panel" id="panel-diferenciais" data-panel="diferenciais">
 <section id="diferenciais" class="why">
   <div class="wrap">
     <div class="section-head reveal">
@@ -995,7 +1005,9 @@
     <p class="reviews-note">Depoimentos ilustrativos.</p>
   </div>
 </section>
+</div><!-- /panel-diferenciais -->
 
+<div class="panel" id="panel-contato" data-panel="contato">
 <section id="contato" class="contact">
   <div class="wrap contact-grid">
     <div class="reveal">
@@ -1021,6 +1033,7 @@
     </div>
   </div>
 </section>
+</div><!-- /panel-contato -->
 
 <footer>
   <div class="wrap footer-grid">
@@ -1068,7 +1081,7 @@
 
 <!-- CTA fixo inferior (apenas mobile) -->
 <div class="mobile-cta">
-  <a class="mobile-cta-call" href="tel:+5514997024535" aria-label="Ligar para a Auto Care">
+  <a class="mobile-cta-call" href="https://wa.me/5514997024535?text=Ol%C3%A1%21%20Gostaria%20de%20receber%20uma%20liga%C3%A7%C3%A3o%20da%20Auto%20Care%2C%20por%20favor." target="_blank" rel="noopener" aria-label="Solicitar ligação pelo WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Ligar
   </a>
@@ -1079,6 +1092,54 @@
 </div>
 
 <script>
+  /* ===== NAVEGAÇÃO POR PAINÉIS ===== */
+  (function(){
+    const panels = document.querySelectorAll('.panel');
+    if (!panels.length) return;
+    const navLinks = document.querySelectorAll('#navLinks a[href^="#"]');
+
+    function showPanel(name){
+      let found = false;
+      panels.forEach(p => {
+        const on = p.getAttribute('data-panel') === name;
+        p.classList.toggle('is-active', on);
+        if (on) found = true;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + name);
+      });
+      // reativa animações de reveal dentro do painel exibido
+      if (found) {
+        document.querySelectorAll('.panel.is-active .reveal').forEach(el => el.classList.add('is-visible'));
+      }
+      return found;
+    }
+
+    // mapa href -> nome do painel (aceita #servicos, #diferenciais, #contato)
+    const map = { '#servicos':'servicos', '#diferenciais':'diferenciais', '#contato':'contato' };
+
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      if (map[href]) {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPanel(map[href]);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (history.replaceState) history.replaceState(null, '', href);
+        });
+      }
+    });
+
+    // qualquer link para #servicos (ex.: botão "Ver serviços" do hero) também troca o painel
+    document.querySelectorAll('a[href="#servicos"]').forEach(a => {
+      a.addEventListener('click', (e) => { e.preventDefault(); showPanel('servicos'); window.scrollTo({top:0,behavior:'smooth'}); });
+    });
+
+    // painel inicial conforme hash da URL
+    const initial = (location.hash && map[location.hash]) ? map[location.hash] : 'servicos';
+    showPanel(initial);
+  })();
+
   /* ===== ANO NO RODAPÉ ===== */
   (function(){ var y=document.getElementById('footYear'); if(y) y.textContent=new Date().getFullYear(); })();
 
