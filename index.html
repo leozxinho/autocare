@@ -1113,22 +1113,32 @@
       window.scrollTo({ top: Math.max(0, y), behavior:'smooth' });
     }
 
-    navLinks.forEach(a => {
-      const href = a.getAttribute('href');
+    navLinks.forEach(a => { a.classList.toggle('active', map[a.getAttribute('href')] === 'servicos'); });
+
+    // Delegação de eventos: captura cliques em QUALQUER link de painel,
+    // mesmo os do rodapé, garantindo que a navegação sempre funcione.
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute('href');
       if (map[href]) {
-        a.addEventListener('click', (e) => {
-          e.preventDefault();
-          showPanel(map[href]);
-          // espera o painel ficar visível antes de calcular a posição
-          requestAnimationFrame(() => requestAnimationFrame(scrollToPanel));
-          if (history.replaceState) history.replaceState(null, '', href);
-        });
+        e.preventDefault();
+        showPanel(map[href]);
+        // garante que o scroll do body esteja liberado (menu mobile trava com overflow:hidden)
+        document.body.style.overflow = '';
+        // espera o menu fechar (transição ~0.3s) antes de rolar até o painel
+        setTimeout(scrollToPanel, 320);
+        if (history.replaceState) history.replaceState(null, '', href);
       }
     });
 
-    // qualquer link para #servicos (ex.: botão "Ver serviços" do hero) também troca o painel
-    document.querySelectorAll('a[href="#servicos"]').forEach(a => {
-      a.addEventListener('click', (e) => { e.preventDefault(); showPanel('servicos'); requestAnimationFrame(() => requestAnimationFrame(scrollToPanel)); });
+    // Também reage a mudanças no hash da URL (fallback robusto)
+    window.addEventListener('hashchange', () => {
+      if (map[location.hash]) {
+        showPanel(map[location.hash]);
+        document.body.style.overflow = '';
+        setTimeout(scrollToPanel, 320);
+      }
     });
 
     // painel inicial conforme hash da URL
