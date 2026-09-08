@@ -158,29 +158,33 @@
   :root[data-theme="light"] .theme-toggle .icon-sun{display:none}
   :root[data-theme="light"] .theme-toggle .icon-moon{display:block}
 
-  /* mobile nav */
+  /* mobile nav — ABAS horizontais (sem hambúrguer) */
   @media (max-width:860px){
+    .nav-inner{flex-wrap:wrap;gap:12px}
+    /* logo à esquerda, ações (tema) à direita, abas na 2ª linha */
+    .nav-actions{order:2}
     .nav-links{
-      position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(80vw,320px);
-      flex-direction:column;align-items:flex-start;justify-content:flex-start;
-      background:var(--panel);border-left:1px solid var(--line);
-      box-shadow:-8px 0 30px rgba(0,0,0,.45);
-      padding:90px 28px 32px;gap:8px;
-      transform:translateX(100%);transition:transform .3s ease;
-      z-index:60;overflow-y:auto;
+      order:3;flex-basis:100%;
+      display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+      gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+      padding:4px 0 2px;margin:0;
+      transform:none;position:static;height:auto;width:auto;
+      background:none;border:none;box-shadow:none;
+      scrollbar-width:none;
     }
-    .nav-links.open{transform:translateX(0)}
-    .nav-links li{width:100%}
-    .nav-links a{font-size:17px;display:block;width:100%;padding:14px 0}
-    .nav-links .nav-cta{margin-top:14px;text-align:center;padding:14px 18px}
-    .menu-toggle{display:flex}
-    /* overlay escuro atrás do drawer */
-    .nav-overlay{
-      position:fixed;inset:0;z-index:55;
-      background:rgba(0,0,0,.5);opacity:0;visibility:hidden;
-      transition:opacity .3s ease, visibility .3s ease;
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links li{width:auto}
+    .nav-links a{
+      font-size:14px;display:inline-block;white-space:nowrap;
+      padding:8px 14px;border-radius:999px;border:1px solid var(--line);
+      color:var(--text);
     }
-    .nav-overlay.open{opacity:1;visibility:visible}
+    .nav-links a.active{background:var(--red);border-color:var(--red);color:#fff}
+    /* esconde o CTA de agendar das abas (há o botão fixo embaixo) e o hambúrguer/overlay */
+    .nav-links .nav-cta{display:none}
+    .menu-toggle{display:none}
+    .nav-overlay{display:none}
+    .hero{padding-top:132px}
   }
 
   /* ---------- HERO ---------- */
@@ -473,7 +477,7 @@
     .hero-bg{
       background-size:contain;
       background-repeat:no-repeat;
-      background-position:center 130px;
+      background-position:center 80px;
     }
     .hero::before{
       background:
