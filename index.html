@@ -158,32 +158,31 @@
   :root[data-theme="light"] .theme-toggle .icon-sun{display:none}
   :root[data-theme="light"] .theme-toggle .icon-moon{display:block}
 
-  /* mobile nav — ABAS horizontais ao lado do botão de tema */
+  /* mobile nav — logo + tema na 1ª linha, abas distribuídas na 2ª */
   @media (max-width:860px){
-    .nav-inner{flex-wrap:nowrap;gap:10px;align-items:center}
-    .logo{flex:0 0 auto}
+    header.site-nav{padding:12px 0}
+    .nav-inner{flex-wrap:wrap;gap:12px;align-items:center}
+    .logo{flex:1 1 auto;order:1}
+    .nav-actions{order:2;flex:0 0 auto}
     .nav-links{
-      order:2;flex:1 1 auto;min-width:0;
-      display:flex;flex-direction:row;align-items:center;justify-content:flex-end;
-      gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-      padding:0;margin:0;
-      transform:none;position:static;height:auto;width:auto;
+      order:3;flex:1 1 100%;
+      display:flex;flex-direction:row;align-items:stretch;
+      gap:8px;padding:0;margin:0;
+      transform:none;position:static;height:auto;width:100%;
       background:none;border:none;box-shadow:none;
-      scrollbar-width:none;
     }
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-links li{width:auto}
+    .nav-links li{flex:1 1 0;min-width:0}
     .nav-links a{
-      font-size:13px;display:inline-block;white-space:nowrap;
-      padding:7px 12px;border-radius:999px;border:1px solid var(--line);
-      color:var(--text);
+      font-size:13.5px;font-weight:600;text-align:center;
+      display:flex;align-items:center;justify-content:center;
+      padding:10px 8px;border-radius:999px;border:1px solid var(--line);
+      color:var(--text);width:100%;
     }
     .nav-links a.active{background:var(--red);border-color:var(--red);color:#fff !important}
-    .nav-actions{order:3;flex:0 0 auto}
     .nav-links .nav-cta{display:none}
     .menu-toggle{display:none}
     .nav-overlay{display:none}
-    .hero{padding-top:96px}
+    .hero{padding-top:150px}
   }
 
   /* ---------- HERO ---------- */
@@ -476,7 +475,7 @@
     .hero-bg{
       background-size:contain;
       background-repeat:no-repeat;
-      background-position:center 80px;
+      background-position:center 160px;
     }
     .hero::before{
       background:
