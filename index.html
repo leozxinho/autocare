@@ -205,26 +205,33 @@
   .hero::before{
     content:"";position:absolute;inset:0;z-index:-1;
     background:
-      linear-gradient(100deg, rgba(var(--hero-overlay),.98) 20%, rgba(var(--hero-overlay),.82) 42%, rgba(var(--hero-overlay),.28) 75%, rgba(var(--hero-overlay),.15) 100%),
-      linear-gradient(to top, rgba(var(--hero-overlay),1) 0%, rgba(var(--hero-overlay),0) 26%);
+      linear-gradient(100deg, rgba(var(--hero-overlay),1) 15%, rgba(var(--hero-overlay),.92) 40%, rgba(var(--hero-overlay),.4) 72%, rgba(var(--hero-overlay),.12) 100%),
+      linear-gradient(to top, rgba(var(--hero-overlay),1) 0%, rgba(var(--hero-overlay),0) 30%);
     pointer-events:none;
   }
   .hero::after{
     content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background-image:repeating-linear-gradient(115deg, rgba(165,18,31,.06) 0 1px, transparent 1px 90px);
+    background-image:repeating-linear-gradient(115deg, rgba(165,18,31,.03) 0 1px, transparent 1px 140px);
   }
   .hero-inner{position:relative;z-index:1;padding-block:60px}
-  .tag{color:var(--accent-text);font-size:13px;font-weight:600;letter-spacing:.5px}
+  .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 16px;border-radius:999px;
+    background:rgba(165,18,31,.12);border:1px solid rgba(165,18,31,.45);
+    color:var(--accent-text);font-size:12.5px;font-weight:700;letter-spacing:.6px;
+    text-transform:uppercase;
+  }
+  .tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red-light)}
   h1{
     font-size:clamp(38px,6.2vw,80px);
     line-height:1.02;
-    margin:16px 0 22px;
+    margin:20px 0 22px;
     max-width:15ch;
     text-wrap:balance;
     color:var(--text);
   }
   h1 .stroke{color:var(--accent-text)}
-  .lead{max-width:46ch;color:var(--muted);font-size:clamp(16px,1.6vw,19px);line-height:1.65}
+  .lead{max-width:46ch;color:var(--text);opacity:.82;font-size:clamp(16px,1.6vw,19px);line-height:1.7}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
@@ -479,7 +486,7 @@
     }
     .hero::before{
       background:
-        linear-gradient(to bottom, rgba(var(--hero-overlay),.55) 0%, rgba(var(--hero-overlay),.72) 45%, rgba(var(--hero-overlay),.9) 75%, rgba(var(--hero-overlay),1) 100%);
+        linear-gradient(to bottom, rgba(var(--hero-overlay),.82) 0%, rgba(var(--hero-overlay),.7) 40%, rgba(var(--hero-overlay),.88) 72%, rgba(var(--hero-overlay),1) 100%);
     }
   }
   @media (max-width:520px){
