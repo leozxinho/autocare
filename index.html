@@ -158,16 +158,15 @@
   :root[data-theme="light"] .theme-toggle .icon-sun{display:none}
   :root[data-theme="light"] .theme-toggle .icon-moon{display:block}
 
-  /* mobile nav — ABAS horizontais (sem hambúrguer) */
+  /* mobile nav — ABAS horizontais ao lado do botão de tema */
   @media (max-width:860px){
-    .nav-inner{flex-wrap:wrap;gap:12px}
-    /* logo à esquerda, ações (tema) à direita, abas na 2ª linha */
-    .nav-actions{order:2}
+    .nav-inner{flex-wrap:nowrap;gap:10px;align-items:center}
+    .logo{flex:0 0 auto}
     .nav-links{
-      order:3;flex-basis:100%;
-      display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+      order:2;flex:1 1 auto;min-width:0;
+      display:flex;flex-direction:row;align-items:center;justify-content:flex-end;
       gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-      padding:4px 0 2px;margin:0;
+      padding:0;margin:0;
       transform:none;position:static;height:auto;width:auto;
       background:none;border:none;box-shadow:none;
       scrollbar-width:none;
@@ -175,16 +174,16 @@
     .nav-links::-webkit-scrollbar{display:none}
     .nav-links li{width:auto}
     .nav-links a{
-      font-size:14px;display:inline-block;white-space:nowrap;
-      padding:8px 14px;border-radius:999px;border:1px solid var(--line);
+      font-size:13px;display:inline-block;white-space:nowrap;
+      padding:7px 12px;border-radius:999px;border:1px solid var(--line);
       color:var(--text);
     }
-    .nav-links a.active{background:var(--red);border-color:var(--red);color:#fff}
-    /* esconde o CTA de agendar das abas (há o botão fixo embaixo) e o hambúrguer/overlay */
+    .nav-links a.active{background:var(--red);border-color:var(--red);color:#fff !important}
+    .nav-actions{order:3;flex:0 0 auto}
     .nav-links .nav-cta{display:none}
     .menu-toggle{display:none}
     .nav-overlay{display:none}
-    .hero{padding-top:132px}
+    .hero{padding-top:96px}
   }
 
   /* ---------- HERO ---------- */
@@ -690,7 +689,7 @@
 
 <header class="site-nav" id="siteNav">
   <div class="wrap nav-inner">
-    <div class="logo">AUTO <span class="accent">CARE</span><small>ESTÉTICA AUTOMOTIVA · GARÇA/SP</small></div>
+    <div class="logo">AUTO <span class="accent">CARE</span></div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
